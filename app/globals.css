@@ -1,26 +1,64 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+
+
+.container {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.movie-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 36px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.movie-card {
+  display: flex;
+  max-width: 451px;
+  width: 100%;
+  height: 279px;
+  box-shadow: 0 4px 12px 0#00000026;
+  line-height: 22px;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.movie-img {
+  max-width: 183px;
+  width: 100%;
+  height: 281px;
+
+}
+
+.movie-info {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  padding: 12px 20px;
+  gap: 7px;
+}
+
+.movie-info-title {
+  font-size: 20px;
+}
+
+.movie-info-data {
+  color: #827E7E;
+}
+
+.movie-info-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.movie-info-genres span {
+  padding: 2px 3px;
+  border: 1px solid #D9D9D9;
+  border-radius: 2px;
+  background: #FAFAFA;
+  color: #000000A6;
 }
