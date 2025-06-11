@@ -7,7 +7,7 @@ import { MovieBasic, Genre, MovieWithGenres } from "../../types";
 const API_KEY = process.env.NEXT_PUBLIC_API_TMDB_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
-const MovieList: React.FC = () => {
+const MovieList = () => {
   const [movies, setMovies] = useState<MovieWithGenres[]>([]);
   const [genreMap, setGenreMap] = useState<Record<number, string>>({});
 
