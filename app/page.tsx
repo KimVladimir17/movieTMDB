@@ -1,61 +1,24 @@
-import { MovieBasic, MovieWithGenres } from "@/types";
-import MovieList from "../components/MovieList";
+// import { MovieWithGenres } from "@/types";
+import SearchInput from "../components/SearchInput";
+import MovieLoader from "./MovieLoader";
+import { getMovies } from "./lib/getMovies";
 
-const API_KEY = process.env.NEXT_PUBLIC_API_TMDB_KEY;
-const BASE_URL = "https://api.themoviedb.org/3";
-
-type Genre = {
-  id: number;
-  name: string;
-};
-
-async function getMovies(): Promise<MovieWithGenres[]> {
-  try {
-    const genreRes = await fetch(
-      `${BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=en-US`
-    );
-    if (!genreRes.ok) throw new Error("Genre loading error");
-
-    const genreData = await genreRes.json();
-    if (!genreData.genres)
-      throw new Error("The genres field is missing in the response");
-
-    const genreMap: Record<number, string> = {};
-    genreData.genres.forEach((g: Genre) => {
-      genreMap[g.id] = g.name;
-    });
-
-    const movieRes = await fetch(
-      `${BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US`,
-      {
-        cache: "no-store",
-      }
-    );
-    if (!movieRes.ok) throw new Error("Movie download error");
-
-    const movieData = await movieRes.json();
-
-    const movieWithGenres: MovieWithGenres[] = movieData.results.map(
-      (movie: MovieBasic) => ({
-        ...movie,
-        genres: movie.genre_ids.map((id) => genreMap[id] || "Unknown"),
-      })
-    );
-    return movieWithGenres;
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    } else {
-      throw new Error("Unknown error when uploading data");
-    }
-  }
+interface Props {
+  searchParams: {
+    q?: string;
+    page?: string;
+  };
 }
+export default async function Page({ searchParams }: Props) {
+  const { q: query, page: page } = await searchParams;
+  const pageNum = parseInt(page || "1", 10);
 
-export default async function Page() {
-  const movies = await getMovies();
+  const { movies, totalPages } = await getMovies(query, pageNum);
+
   return (
-    <div className="main">
-      <MovieList movies={movies} />
-    </div>
+    <main className="main">
+      <SearchInput />
+      <MovieLoader initialMovies={movies} totalPages={totalPages} />
+    </main>
   );
 }

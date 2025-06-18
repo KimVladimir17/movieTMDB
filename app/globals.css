@@ -67,3 +67,19 @@
   text-align: center;
   margin-top: 50px;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.pagination-num {
+  padding: 10px;
+}
+
+.pagination-num.active {
+  background: rgba(128, 128, 128, 0.49);
+}

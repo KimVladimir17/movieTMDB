@@ -17,6 +17,7 @@ export default function MovieCard({ movie }: Props) {
         width={183}
         height={281}
         unoptimized
+        priority
       />
       <div className="movie-info">
         <h3 className="movie-info-title">{movie.title}</h3>

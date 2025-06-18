@@ -8,6 +8,8 @@ type Props = {
 };
 
 export default function MovieList({ movies }: Props) {
+  // console.log(movies);
+
   return (
     <div className="container">
       <div className="movie-list">
