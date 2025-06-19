@@ -81,5 +81,21 @@
 }
 
 .pagination-num.active {
-  background: rgba(128, 128, 128, 0.49);
+  background: rgba(128, 128, 128, 0.195);
+}
+
+button {
+  cursor: pointer;
+}
+
+.no-result {
+  text-align: center;
+}
+
+.no-result span {
+  font-weight: 700;
+}
+
+.nextPrev-btn.disabled {
+  display: none;
 }

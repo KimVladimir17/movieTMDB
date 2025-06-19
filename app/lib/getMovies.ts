@@ -6,7 +6,7 @@ const BASE_URL = "https://api.themoviedb.org/3";
 export async function getMovies(
   query: string = "",
   page: number = 1
-): Promise<{ movies: MovieWithGenres[]; totalPages: number }> {
+): Promise<MovieWithGenres[]> {
   try {
     const genreRes = await fetch(
       `${BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=en-US`
@@ -34,7 +34,6 @@ export async function getMovies(
     if (!movieRes.ok) throw new Error("Movie download error");
 
     const movieData = await movieRes.json();
-
     const movieWithGenres: MovieWithGenres[] = movieData.results.map(
       (movie: MovieBasic) => ({
         ...movie,
@@ -42,7 +41,7 @@ export async function getMovies(
       })
     );
 
-    return { movies: movieWithGenres, totalPages: movieData.total_pages };
+    return movieWithGenres;
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);

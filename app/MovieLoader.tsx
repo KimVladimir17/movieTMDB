@@ -9,16 +9,14 @@ import Pagination from "@/components/Pogination";
 
 type Props = {
   initialMovies: MovieWithGenres[];
-  totalPages: number;
 };
 
-export default function MovieLoader({ initialMovies, totalPages }: Props) {
+export default function MovieLoader({ initialMovies }: Props) {
   const searchParams = useSearchParams();
   const q = searchParams.get("q") || "";
   const page = Number(searchParams.get("page")) || 1;
 
   const [movies, setMovies] = useState<MovieWithGenres[]>(initialMovies);
-  const [pages, setPages] = useState(totalPages);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -35,8 +33,7 @@ export default function MovieLoader({ initialMovies, totalPages }: Props) {
           }
         );
         const data = await res.json();
-        setMovies(data.movies);
-        setPages(data.totalPages);
+        setMovies(data);
       } catch (e) {
         console.error("Ошибка загрузки:", e);
       } finally {
@@ -49,10 +46,14 @@ export default function MovieLoader({ initialMovies, totalPages }: Props) {
   }, [q, page]);
 
   if (loading) return <Loading />;
-  return (
+  return movies.length === 0 ? (
+    <p className="no-result">
+      Nothing found for search <span> `{q}`</span>
+    </p>
+  ) : (
     <div>
       <MovieList movies={movies} />;
-      <Pagination currentPage={page} totalPages={pages} query={q} />
+      <Pagination currentPage={page} query={q} />
     </div>
   );
 }

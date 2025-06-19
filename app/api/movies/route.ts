@@ -6,9 +6,13 @@ export async function GET(req: NextRequest) {
   const page = parseInt(req.nextUrl.searchParams.get("page") || "1");
 
   try {
-    const { movies, totalPages } = await getMovies(query, page);
-    return Response.json({ movies, totalPages });
+    const movies = await getMovies(query, page);
+    return Response.json(movies);
   } catch (error) {
-    return new Response("Movie loading error", { status: 500 });
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      return new Response("Movie loading error", { status: 500 });
+    }
   }
 }
