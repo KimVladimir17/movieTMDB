@@ -11,19 +11,19 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error("Ошибка на сервере:", error);
+    console.error("Error on the server:", error);
   }, [error]);
 
   return (
     <div style={{ padding: 40 }}>
       <Alert
-        message="Ошибка загрузки"
+        message="Download error"
         description={error.message}
         type="error"
         showIcon
       />
       <button onClick={() => reset()} style={{ marginTop: 20 }}>
-        Повторить попытку
+        Try again
       </button>
     </div>
   );

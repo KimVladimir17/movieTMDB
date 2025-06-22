@@ -10,6 +10,8 @@ export type MovieBasic = {
   poster_path: string;
   release_date: string;
   genre_ids: number[];
+  vote_average: number;
+  rating?: number;
 };
 
 export type MovieWithGenres = MovieBasic & {

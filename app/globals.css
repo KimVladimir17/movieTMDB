@@ -10,6 +10,12 @@
 
 }
 
+.main-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .movie-list {
   display: flex;
   flex-wrap: wrap;
@@ -17,11 +23,16 @@
   gap: 36px;
 }
 
-.movie-card {
-  display: flex;
+.ant-card {
+
   max-width: 451px;
   width: 100%;
-  height: 279px;
+}
+
+.ant-card-body {
+  padding: 0 !important;
+  display: flex;
+  height: 281px;
   box-shadow: 0 4px 12px 0#00000026;
   line-height: 22px;
 }
@@ -34,6 +45,7 @@
 }
 
 .movie-info {
+  position: relative;
   display: flex;
   flex-direction: column;
   font-size: 12px;
@@ -41,7 +53,16 @@
   gap: 7px;
 }
 
+.movie-info-text {
+  overflow: auto;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}
+
 .movie-info-title {
+  width: 90%;
   font-size: 20px;
 }
 
@@ -68,12 +89,8 @@
   margin-top: 50px;
 }
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin: 20px 0;
+.ant-pagination {
+  margin: 37px 0;
 }
 
 .pagination-num {
@@ -98,4 +115,26 @@ button {
 
 .nextPrev-btn.disabled {
   display: none;
+}
+
+.rating-circle {
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ant-tabs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ant-tabs-nav-wrap {
+  margin-top: 13px;
 }

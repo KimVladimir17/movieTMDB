@@ -26,7 +26,7 @@ export default function SearchInput() {
   return (
     <div style={{ maxWidth: 400, margin: "20px auto" }}>
       <Input
-        placeholder="Поиск фильмов..."
+        placeholder="Movie search..."
         value={value}
         onChange={(e) => setValue(e.target.value)}
         allowClear

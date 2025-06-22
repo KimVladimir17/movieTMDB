@@ -1,59 +1,48 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import MovieList from "../components/MovieList";
 import { MovieWithGenres } from "@/types";
 import Loading from "./loading";
-import Pagination from "@/components/Pogination";
+
+import { Pagination } from "antd";
 
 type Props = {
-  initialMovies: MovieWithGenres[];
+  movies: MovieWithGenres[];
+  query?: string;
+  pageNum: number;
 };
 
-export default function MovieLoader({ initialMovies }: Props) {
-  const searchParams = useSearchParams();
-  const q = searchParams.get("q") || "";
-  const page = Number(searchParams.get("page")) || 1;
+export default function MovieLoader({ movies, query, pageNum }: Props) {
+  const [loading, setLoading] = useState(true);
 
-  const [movies, setMovies] = useState<MovieWithGenres[]>(initialMovies);
-  const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
+  const goToPage = (page: number) => {
+    const q = query ? ` &q=${encodeURIComponent(query)}` : "";
+    router.push(`/?page=${page}${q}`);
+  };
   useEffect(() => {
-    const trimmed = q.trim();
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch(
-          trimmed
-            ? `/api/movies?q=${trimmed}&page=${page}`
-            : `/api/movies?page=${page}`,
-          {
-            cache: "no-cache",
-          }
-        );
-        const data = await res.json();
-        setMovies(data);
-      } catch (e) {
-        console.error("Ошибка загрузки:", e);
-      } finally {
-        setTimeout(() => {
-          setLoading(false);
-        }, 500);
-      }
-    };
-    fetchData();
-  }, [q, page]);
+    setLoading(true);
+    const timeout = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(timeout);
+  }, [movies]);
 
   if (loading) return <Loading />;
+
   return movies.length === 0 ? (
     <p className="no-result">
-      Nothing found for search <span> `{q}`</span>
+      Nothing found for search <span> `{query}`</span>
     </p>
   ) : (
-    <div>
-      <MovieList movies={movies} />;
-      <Pagination currentPage={page} query={q} />
+    <div className="main-block">
+      <MovieList movies={movies} />
+      <Pagination
+        current={pageNum}
+        total={500 * 10}
+        onChange={goToPage}
+        showSizeChanger={false}
+      />
     </div>
   );
 }

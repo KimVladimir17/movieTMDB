@@ -2,6 +2,9 @@
 
 import Image from "next/image";
 import { MovieWithGenres } from "@/types";
+import { Card } from "antd";
+import RatingCircle from "./RatingCircle";
+import StarRatingContainer from "@/app/rated/StarRatingContainer";
 
 type Props = {
   movie: MovieWithGenres;
@@ -9,7 +12,7 @@ type Props = {
 
 export default function MovieCard({ movie }: Props) {
   return (
-    <div className="movie-card" key={movie.id}>
+    <Card key={movie.id}>
       <Image
         className="movie-img"
         src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
@@ -28,7 +31,9 @@ export default function MovieCard({ movie }: Props) {
           ))}
         </div>
         <p className="movie-info-text">{movie.overview.slice(0, 200)}...</p>
+        <StarRatingContainer movieId={movie.id} />
+        <RatingCircle rating={movie.vote_average} />
       </div>
-    </div>
+    </Card>
   );
 }
