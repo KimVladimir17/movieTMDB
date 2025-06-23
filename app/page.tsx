@@ -22,23 +22,25 @@ export default async function Page({ searchParams }: Props) {
 
   return (
     <main className="main">
-      <Tabs
-        defaultActiveKey="search"
-        items={[
-          {
-            key: "search",
-            label: "Поиск",
-            children: (
-              <SearchMovies
-                movies={movies}
-                query={query}
-                pageNum={Number(pageNum)}
-              />
-            ),
-          },
-          { key: "rated", label: "Рейтинг", children: <RatedMovies /> },
-        ]}
-      />
+      <div className="container">
+        <Tabs
+          defaultActiveKey="search"
+          items={[
+            {
+              key: "search",
+              label: "Search",
+              children: (
+                <SearchMovies
+                  movies={movies}
+                  query={query}
+                  pageNum={Number(pageNum)}
+                />
+              ),
+            },
+            { key: "rated", label: "Rated", children: <RatedMovies /> },
+          ]}
+        />
+      </div>
     </main>
   );
 }

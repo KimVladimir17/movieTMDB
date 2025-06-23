@@ -1,39 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { MovieWithGenres } from "@/types";
-import MovieList from "@/components/MovieList";
-import { getRatedMovies } from "../lib/Services";
+import { Pagination } from "antd";
+import { useState, useEffect } from "react";
+import { useGuestSession } from "../GuestSessionsProvider";
+import MovieCard from "@/components/MovieCard";
 
 export default function RatedMovies() {
-  const [ratedMovies, setRatedMovies] = useState<MovieWithGenres[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { ratedMovies } = useGuestSession();
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
 
   useEffect(() => {
-    const guestSessionId = localStorage.getItem("guest_session_id");
-    if (!guestSessionId) return;
+    setCurrentPage(1);
+  }, [ratedMovies]);
 
-    const fetchRated = async () => {
-      try {
-        const data = await getRatedMovies(guestSessionId);
-        setRatedMovies(data);
-      } catch (err) {
-        console.error("Ошибка загрузки рейтингов:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchRated();
-  }, []);
-
-  if (loading) return <div>Загрузка...</div>;
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const currentMovies = ratedMovies.slice(startIndex, endIndex);
 
   return (
     <div>
       {ratedMovies.length === 0 ? (
         <p>You have not rated a single movie yet.</p>
       ) : (
-        <MovieList movies={ratedMovies} />
+        <div className="movie-list">
+          {currentMovies.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
+
+          <Pagination
+            current={currentPage}
+            pageSize={pageSize}
+            total={ratedMovies.length}
+            onChange={(page) => setCurrentPage(page)}
+            showSizeChanger={false}
+          />
+        </div>
       )}
     </div>
   );

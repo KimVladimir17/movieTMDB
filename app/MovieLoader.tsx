@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import MovieList from "../components/MovieList";
 import { MovieWithGenres } from "@/types";
 import Loading from "./loading";
 
 import { Pagination } from "antd";
+import MovieCard from "@/components/MovieCard";
 
 type Props = {
   movies: MovieWithGenres[];
@@ -36,7 +36,11 @@ export default function MovieLoader({ movies, query, pageNum }: Props) {
     </p>
   ) : (
     <div className="main-block">
-      <MovieList movies={movies} />
+      <div className="movie-list">
+        {movies.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
+      </div>
       <Pagination
         current={pageNum}
         total={500 * 10}

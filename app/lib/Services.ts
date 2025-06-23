@@ -106,6 +106,5 @@ export async function getRatedMovies(
   );
   if (!ratedRes.ok) throw new Error("Error downloading popular movies");
   const ratedData = await ratedRes.json();
-
   return mapMoviesWithGenres(ratedData.results, genreMap);
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useGuestSession } from "../GuestSessionsProvider";
-import { getMovieDetails, rateMovie } from "../lib/Services";
+import { getRatedMovies, rateMovie } from "../lib/Services";
 import { StarRating } from "./StarRating";
 
 export default function StarRatingContainer({ movieId }: { movieId: number }) {
@@ -17,13 +17,15 @@ export default function StarRatingContainer({ movieId }: { movieId: number }) {
   const handleRate = async (value: number) => {
     setRating(value);
     if (guestSessionId) {
-      await rateMovie(movieId, value, guestSessionId);
-      const movie = await getMovieDetails(movieId);
-
-      setRatedMovies((prev) => [
-        ...prev.filter((m) => m.id !== movieId),
-        { ...movie, rating: value },
-      ]);
+      try {
+        await rateMovie(movieId, value, guestSessionId);
+        setTimeout(async () => {
+          const updatedMovies = await getRatedMovies(guestSessionId);
+          setRatedMovies(updatedMovies);
+        }, 1000);
+      } catch (err) {
+        console.error("Error updating rating", err);
+      }
     }
   };
 

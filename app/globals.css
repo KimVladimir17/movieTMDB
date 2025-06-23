@@ -1,12 +1,22 @@
 @import "tailwindcss";
 
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 
+.main {
+
+  background: #F7F7F7;
+}
 
 .container {
-  max-width: 1440px;
+  max-width: 1010px;
   width: 100%;
+  background: #fff;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 36px;
 
 }
 

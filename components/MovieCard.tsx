@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { MovieWithGenres } from "@/types";
 import { Card } from "antd";
@@ -12,7 +10,7 @@ type Props = {
 
 export default function MovieCard({ movie }: Props) {
   return (
-    <Card key={movie.id}>
+    <Card>
       <Image
         className="movie-img"
         src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
