@@ -13,7 +13,7 @@ interface Props {
   };
 }
 export default async function Page({ searchParams }: Props) {
-  const { q: query, page: page } = await searchParams;
+  const { q: query, page } = await searchParams;
   const pageNum = parseInt(page || "1", 10);
 
   const movies = query?.trim()
