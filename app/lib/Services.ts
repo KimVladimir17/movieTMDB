@@ -100,7 +100,6 @@ export async function getRatedMovies(
   guestSessionId: string
 ): Promise<MovieWithGenres[]> {
   const genreMap = await getGenreMap();
-
   const ratedRes = await fetch(
     `${BASE_URL}/guest_session/${guestSessionId}/rated/movies?api_key=${API_KEY}&language=en-US`
   );

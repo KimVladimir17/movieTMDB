@@ -41,7 +41,7 @@ export function GuestSessionProvider({
         .then((movies) => {
           setRatedMovies(movies);
         })
-        .catch((err) => console.error("Ошибка загрузки рейтингов:", err));
+        .catch((err) => console.error("Error loading ratings:", err));
     }
   }, [guestSessionId]);
 

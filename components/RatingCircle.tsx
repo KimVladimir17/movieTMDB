@@ -1,5 +1,5 @@
-type RatingCircleProps = {
-  rating: number;
+type Props = {
+  rating?: number;
 };
 
 function getRatingColor(rating: number): string {
@@ -9,7 +9,8 @@ function getRatingColor(rating: number): string {
   return "#66E900";
 }
 
-export default function RatingCircle({ rating }: RatingCircleProps) {
+export default function RatingCircle({ rating }: Props) {
+  if (rating == null) return null;
   const color = getRatingColor(rating);
 
   return (

@@ -2,13 +2,18 @@ import Image from "next/image";
 import { MovieWithGenres } from "@/types";
 import { Card } from "antd";
 import RatingCircle from "./RatingCircle";
-import StarRatingContainer from "@/app/rated/StarRatingContainer";
+import StarRatingContainer from "@/components/StarRatingContainer";
+import { useGuestSession } from "@/app/GuestSessionsProvider";
 
 type Props = {
   movie: MovieWithGenres;
 };
 
 export default function MovieCard({ movie }: Props) {
+  const { ratedMovies } = useGuestSession();
+
+  const userRated = ratedMovies.find((m) => m.id === movie.id);
+
   return (
     <Card>
       <Image
@@ -30,7 +35,7 @@ export default function MovieCard({ movie }: Props) {
         </div>
         <p className="movie-info-text">{movie.overview.slice(0, 200)}...</p>
         <StarRatingContainer movieId={movie.id} />
-        <RatingCircle rating={movie.vote_average} />
+        {userRated && <RatingCircle rating={userRated.rating} />}
       </div>
     </Card>
   );

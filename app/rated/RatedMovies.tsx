@@ -24,11 +24,12 @@ export default function RatedMovies() {
       {ratedMovies.length === 0 ? (
         <p>You have not rated a single movie yet.</p>
       ) : (
-        <div className="movie-list">
-          {currentMovies.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
-          ))}
-
+        <div className="main-block">
+          <div className="movie-list">
+            {currentMovies.map((movie) => (
+              <MovieCard key={movie.id} movie={movie} />
+            ))}
+          </div>
           <Pagination
             current={currentPage}
             pageSize={pageSize}
