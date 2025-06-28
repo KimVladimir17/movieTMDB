@@ -2,15 +2,15 @@
 // import SearchInput from "../components/SearchInput";
 // import MovieLoader from "./MovieLoader";
 import { Tabs } from "antd";
-import { getDefaultMovies, searchMovies } from "./lib/Services";
+import { getDefaultMovies, searchMovies } from "./lib/services";
 import SearchMovies from "./search/SearchMovies";
 import RatedMovies from "./rated/RatedMovies";
 
 interface Props {
-  searchParams: {
+  searchParams: Promise<{
     q?: string;
     page?: string;
-  };
+  }>;
 }
 export default async function Page({ searchParams }: Props) {
   const { q: query, page } = await searchParams;

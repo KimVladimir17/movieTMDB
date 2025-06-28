@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
-import { createGuestSession, getRatedMovies } from "./lib/Services";
+import { createGuestSession, getRatedMovies } from "./lib/services";
 import { MovieWithGenres } from "@/types";
 
 type GuestSessionContextType = {

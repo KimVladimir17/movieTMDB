@@ -33,7 +33,9 @@ function mapMoviesWithGenres(
 ): MovieWithGenres[] {
   return movies.map((movie) => ({
     ...movie,
-    genres: movie.genre_ids.map((id) => genreMap[id] || "Unknown"),
+    genres: Array.isArray(movie.genre_ids)
+      ? movie.genre_ids.map((id) => genreMap[id] || "Unknown")
+      : ["Unknown"],
   }));
 }
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useGuestSession } from "../app/GuestSessionsProvider";
-import { getRatedMovies, rateMovie } from "../app/lib/Services";
+import { getRatedMovies, rateMovie } from "../app/lib/services";
 import { StarRating } from "./StarRating";
 export default function StarRatingContainer({ movieId }: { movieId: number }) {
   const { guestSessionId, ratedMovies, setRatedMovies } = useGuestSession();
